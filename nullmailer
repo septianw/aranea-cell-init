@@ -1,0 +1,14 @@
+#!/bin/bash
+
+admin=septian@aranea.ws
+
+# setting nullmailer
+
+echo "smtp.mandrillapp.com smtp --port=587 --starttls --user=$1 --pass=$2" > /etc/nullmailer/remotes
+
+echo $(hostname) > /etc/nullmailer/defaultdomain
+echo "\$$(hostname)" > /etc/nullmailer/me
+echo $admin > /etc/nullmailer/adminaddr
+service nullmailer reloadnull
+
+echo "This is a test message from ${USER}@${HOSTNAME} at $(date) nullmailer installation done" | sendmail $admin

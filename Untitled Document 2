@@ -1,0 +1,3 @@
+ wget -qO ee rt.cx/ee && sudo bash ee
+ ee stack install nginx && ee stack install php && ee stack install wpcli
+ apt-get install mariadb-client

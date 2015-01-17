@@ -22,7 +22,8 @@ get() {
   cat $file | grep $fin | tail -n1 | tr -d [:space:] | cut -d$delim -f2
 }
 
-apt-get install mariadb-client wget git-core;
+apt-get -y update
+apt-get -y install mariadb-client wget git-core pwgen lshell;
 wget -qO ee rt.cx/ee && sudo bash ee;
 ee stack install nginx && ee stack install php && ee stack install wpcli;
 
@@ -39,10 +40,10 @@ sed -i -e "s/db-user = $adminuname false/db-user = false/g" /etc/easyengine/ee.c
 sed -i -e "s/email =/email = $adminemail/g" /etc/easyengine/ee.conf
 
 sudo useradd -s /bin/bash -m -d /home/wpee -U wpee;
-echo "Cmnd_Alias USERS  = /usr/sbin/useradd,/usr/sbin/userdel,/usr/sbin/usermod,/usr/bin/users" >> /etc/sudoers
-echo "Cmnd_Alias CH     = /bin/chown,/bin/chmod" >> /etc/sudoers
-echo "Cmnd_Alias DISK   = /bin/dd,/bin/mount,/bin/mkdir" >> /etc/sudoers
-echo "Cmnd_Alias USM    = USERS,CH,DISK" >> /etc/sudoers
+# echo "Cmnd_Alias USERS  = /usr/sbin/useradd,/usr/sbin/userdel,/usr/sbin/usermod,/usr/bin/users" >> /etc/sudoers
+# echo "Cmnd_Alias CH     = /bin/chown,/bin/chmod" >> /etc/sudoers
+# echo "Cmnd_Alias DISK   = /bin/dd,/bin/mount,/bin/mkdir,/sbin/losetup,/sbin/mkfs.ext4,/bin/umount,/usr/bin/tee" >> /etc/sudoers
+# echo "Cmnd_Alias USM    = USERS,CH,DISK" >> /etc/sudoers
 echo "wpee    wp=(root)NOPASSWD:/usr/local/sbin/ee,USM" >> /etc/sudoers
 
 echo '[client]' > /home/wpee/.my.cnf
@@ -51,3 +52,6 @@ echo "user=$dbuser" >> /home/wpee/.my.cnf
 echo "password=$dbpass" >> /home/wpee/.my.cnf
 cp /home/wpee/.my.cnf /root/.my.cnf
 chown wpee:wpee /home/wpee/.my.cnf
+
+mkdir -p /disks
+chown -Rf wpee:wpee /disks

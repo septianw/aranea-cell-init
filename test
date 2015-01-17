@@ -1,0 +1,2 @@
+rm -rf /var/lib/libvirt/images/wp
+ssh-keygen -f "/home/asep/.ssh/known_hosts" -R wp

@@ -40,11 +40,14 @@ sed -i -e "s/db-user = $adminuname false/db-user = false/g" /etc/easyengine/ee.c
 sed -i -e "s/email =/email = $adminemail/g" /etc/easyengine/ee.conf
 
 sudo useradd -s /bin/bash -m -d /home/wpee -U wpee;
+wget https://raw.githubusercontent.com/septianw/aranea-cell-init/master/create-site.sh
+mv create-site.sh /usr/local/sbin/create-site
+chmod 750 /usr/local/sbin/create-site
 # echo "Cmnd_Alias USERS  = /usr/sbin/useradd,/usr/sbin/userdel,/usr/sbin/usermod,/usr/bin/users" >> /etc/sudoers
 # echo "Cmnd_Alias CH     = /bin/chown,/bin/chmod" >> /etc/sudoers
 # echo "Cmnd_Alias DISK   = /bin/dd,/bin/mount,/bin/mkdir,/sbin/losetup,/sbin/mkfs.ext4,/bin/umount,/usr/bin/tee" >> /etc/sudoers
 # echo "Cmnd_Alias USM    = USERS,CH,DISK" >> /etc/sudoers
-echo "wpee    wp=(root)NOPASSWD:/usr/local/sbin/ee,USM" >> /etc/sudoers
+echo "wpee    wp=(root)NOPASSWD:/usr/local/sbin/ee,/usr/local/sbin/create-site" >> /etc/sudoers
 
 echo '[client]' > /home/wpee/.my.cnf
 echo "host=$dbhost" >> /home/wpee/.my.cnf

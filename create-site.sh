@@ -3,12 +3,12 @@
 sitename=$1
 size=$2
 
-# echo "Creating site\n"
-# sudo ee site create $sitename --wpsc > $sitename.log
+echo "Creating site"
+sudo ee site create $sitename --wpsc > $sitename.log
 
 echo "fetching info"
 sudo ee site info $sitename | tr [:blank:] "|" | tr -s "|" | tail -n7 | sed -r "s/\x1B\[([0-9]{1,3}((;[0-9]{1,3})*)?)?[m|K]//g" > $sitename.info
-webroot=$(sudo ee site show rumahku.local | grep root | tr -d "\t" | tr " " "|" | tr -d ";" | cut -d"|" -f2)
+webroot=$(sudo ee site show $sitename | grep root | tr -d "\t" | tr " " "|" | tr -d ";" | cut -d"|" -f2)
 
 echo "Deploying disk"
 imgloc="/disks/"

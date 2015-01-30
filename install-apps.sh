@@ -23,7 +23,8 @@ get() {
 }
 
 apt-get -y update
-apt-get -y install mariadb-client wget git-core pwgen lshell;
+apt-get -y install mariadb-client wget git-core pwgen lshell python-pip;
+
 wget -qO ee rt.cx/ee && sudo bash ee;
 ee stack install nginx && ee stack install php && ee stack install wpcli;
 
